@@ -73,7 +73,9 @@ in this Software without prior written authorization from The Open Group.
 #ifdef DMX
 #include <X11/extensions/dmxext.h>
 #endif
+#ifdef XPRINT
 #include <X11/extensions/Print.h>
+#endif
 #include <X11/Xos.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -386,6 +388,7 @@ print_screen_info(Display *dpy, int scr)
     printf ("\n");
     printf ("screen #%d:\n", scr);
 
+#ifdef XPRINT
     /* Check whether this is a screen of a print DDX */
     if (hasExtension(dpy, XP_PRINTNAME)) {
         Screen **pscreens;
@@ -401,6 +404,7 @@ print_screen_info(Display *dpy, int scr)
         XFree(pscreens);		      
     }
     printf ("  print screen:    %s\n", isPrintScreen?"yes":"no");
+#endif
 
     if (isPrintScreen) {
         /* Print resolution is set on a per-printer basis (per-document
@@ -1196,6 +1200,7 @@ static int print_dmx_info(Display *dpy, char *extname)
 
 #endif /* DMX */
 
+#ifdef XPRINT
 static
 void print_xprint_attrpool(const char *name, const char *attrpool)
 {
@@ -1220,6 +1225,7 @@ void print_xprint_attrpool(const char *name, const char *attrpool)
 static int
 print_xprint_info(Display *dpy, char *extname)
 {  
+
   short           majorrev,
                   minorrev;
   int             xp_event_base,
@@ -1286,9 +1292,10 @@ print_xprint_info(Display *dpy, char *extname)
   }
   
   XpFreePrinterList(printerlist);
- 
+
   return 1;
 }
+#endif 
 
 /* utilities to manage the list of recognized extensions */
 
@@ -1340,7 +1347,9 @@ ExtensionPrintInfo known_extensions[] =
 #ifdef DMX
     {"DMX", print_dmx_info, False},
 #endif
+#ifdef XPRINT
     {XP_PRINTNAME, print_xprint_info, False},
+#endif
     /* add new extensions here */
 };
 
