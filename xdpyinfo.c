@@ -70,9 +70,13 @@ in this Software without prior written authorization from The Open Group.
 #ifdef PANORAMIX
 #include <X11/extensions/Xinerama.h>
 #endif
+#include <X11/extensions/Print.h>
 #include <X11/Xos.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+/* Turn a NULL pointer string into an empty string */
+#define NULLSTR(x) (((x)!=NULL)?(x):(""))
 
 char *ProgramName;
 Bool queryExtensions = False;
@@ -1015,6 +1019,85 @@ print_xinerama_info(Display *dpy, char *extname)
 
 #endif /* PANORAMIX */
 
+static
+void print_xprint_attrpool(const char *name, const char *attrpool)
+{
+  int         c;
+  const char *s = attrpool;
+  
+  printf("    %s:\n      ", name);
+  
+  while( (c = *s++) != '\0' )
+  {
+    if (c == '\n') {
+      printf("\n      ");
+    }
+    else
+    {
+      fputc(c, stdout);
+    }
+  }
+  fputc('\n', stdout);
+}
+
+static int
+print_xprint_info(Display *dpy, char *extname)
+{  
+  short         majorrev,
+                minorrev;
+  int           xp_event_base,
+                xp_error_base;
+  XPPrinterList printerlist;
+  int           plcount,
+                i;
+
+  if (XpQueryVersion(dpy, &majorrev, &minorrev) == False) {
+    return 0;
+  }
+  
+  print_standard_extension_info(dpy, extname, majorrev, minorrev);
+
+  if (XpQueryExtension(dpy, &xp_event_base, &xp_error_base) == False) {
+    printf("  XpQueryExtension() failed.\n");
+    return 0;
+  }
+  
+  printf("  xp_event_base=%d, xp_error_base=%d\n", xp_event_base, xp_error_base);
+
+  printerlist = XpGetPrinterList(dpy, NULL, &plcount);
+  /* Print number of printers, then each printer name and description */
+  printf("  Found %d printers on this server.\n", plcount);
+  for( i = 0 ; i < plcount ; i++) {
+    printf("  printer %d: name='%s', descr='%s'\n",
+           i, NULLSTR(printerlist[i].name), NULLSTR(printerlist[i].desc));
+  }
+  
+  for( i = 0 ; i < plcount ; i++) {
+    char       *printername = printerlist[i].name;
+    XPContext   pcontext;
+    char       *s;
+    
+    printf("  Attributes of printer '%s':\n", NULLSTR(printername));
+
+    pcontext = XpCreateContext(dpy, printername);
+    if (pcontext == None) {
+      printf("    Error: Could not open printer.\n");
+      continue;
+    }
+
+    s=XpGetAttributes(dpy, pcontext, XPJobAttr);     print_xprint_attrpool("XPJobAttr",     s);  XFree(s);
+    s=XpGetAttributes(dpy, pcontext, XPDocAttr);     print_xprint_attrpool("XPDocAttr",     s);  XFree(s);
+    s=XpGetAttributes(dpy, pcontext, XPPageAttr);    print_xprint_attrpool("XPPageAttr",    s);  XFree(s);
+    s=XpGetAttributes(dpy, pcontext, XPPrinterAttr); print_xprint_attrpool("XPPrinterAttr", s);  XFree(s);
+    s=XpGetAttributes(dpy, pcontext, XPServerAttr);  print_xprint_attrpool("XPServerAttr",  s);  XFree(s);
+
+    XpDestroyContext(dpy, pcontext);
+  }
+  
+  XpFreePrinterList(printerlist);
+ 
+  return 1;
+}
 
 /* utilities to manage the list of recognized extensions */
 
@@ -1063,6 +1146,7 @@ ExtensionPrintInfo known_extensions[] =
 #ifdef PANORAMIX
     {"XINERAMA", print_xinerama_info, False},
 #endif
+    {XP_PRINTNAME, print_xprint_info, False},
     /* add new extensions here */
 };
 
