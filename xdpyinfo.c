@@ -29,7 +29,7 @@ in this Software without prior written authorization from The Open Group.
  * Author:  Jim Fulton, MIT X Consortium
  */
 
-/* $XFree86: xc/programs/xdpyinfo/xdpyinfo.c,v 3.30 2003/11/17 22:20:51 dawes Exp $ */
+/* $XFree86: xc/programs/xdpyinfo/xdpyinfo.c,v 3.29 2003/04/14 20:38:10 herrb Exp $ */
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -171,6 +171,18 @@ print_display_info(Display *dpy)
 		printf(".%d", vendrel % 1000);
 	    }
 	}
+	printf("\n");
+    }
+
+    if (strstr(ServerVendor (dpy), "X.Org")) {
+	int vendrel = VendorRelease(dpy);
+
+	printf("X.Org version: ");
+	printf("%d.%d.%d", vendrel / 10000000,
+	       (vendrel /   100000) % 100,
+	       (vendrel /     1000) % 100);
+	if (vendrel % 1000)
+	    printf(".%d", vendrel % 1000);
 	printf("\n");
     }
 
