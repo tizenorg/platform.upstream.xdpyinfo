@@ -306,6 +306,20 @@ print_visual_info(XVisualInfo *vip)
 	    vip->bits_per_rgb);
 }
 
+static
+Bool hasExtension(Display *dpy, char *extname)
+{
+  int    num_extensions,
+         i;
+  char **extensions;
+  extensions = XListExtensions(dpy, &num_extensions);
+  for (i = 0; i < num_extensions &&
+         (strcmp(extensions[i], extname) != 0); i++);
+  XFreeExtensionList(extensions);
+  return i != num_extensions;
+}
+
+
 static void
 print_screen_info(Display *dpy, int scr)
 {
@@ -319,7 +333,7 @@ print_screen_info(Display *dpy, int scr)
     double xres, yres;
     int ndepths = 0, *depths = NULL;
     unsigned int width, height;
-
+    Bool isPrintScreen = False;
 
     /*
      * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
@@ -336,11 +350,37 @@ print_screen_info(Display *dpy, int scr)
 
     printf ("\n");
     printf ("screen #%d:\n", scr);
-    printf ("  dimensions:    %dx%d pixels (%dx%d millimeters)\n",
-	    DisplayWidth (dpy, scr), DisplayHeight (dpy, scr),
-	    DisplayWidthMM(dpy, scr), DisplayHeightMM (dpy, scr));
-    printf ("  resolution:    %dx%d dots per inch\n", 
-	    (int) (xres + 0.5), (int) (yres + 0.5));
+
+    /* Check whether this is a screen of a print DDX */
+    if (hasExtension(dpy, XP_PRINTNAME)) {
+        Screen **pscreens;
+        int      pscrcount;
+
+        pscreens = XpQueryScreens(dpy, &pscrcount);
+        for( i = 0 ; (i < pscrcount) && pscreens ; i++ ) {
+            if (scr == (int)XScreenNumberOfScreen(pscreens[i])) {
+                isPrintScreen = True;
+                break;
+            }
+        }
+        XFree(pscreens);		      
+    }
+    printf ("  print screen:    %s\n", isPrintScreen?"yes":"no");
+
+    if (isPrintScreen) {
+        /* Print resolution is set on a per-printer basis (per-document
+         * or per-page), the screen itself has no "default" resolution */
+        printf ("  maximum dimensions:    %dx%d pixels\n",
+	        XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr));
+    }
+    else
+    {
+        printf ("  dimensions:    %dx%d pixels (%dx%d millimeters)\n",
+	        XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr),
+	        XDisplayWidthMM(dpy, scr), XDisplayHeightMM (dpy, scr));
+        printf ("  resolution:    %dx%d dots per inch\n", 
+	        (int) (xres + 0.5), (int) (yres + 0.5));
+    }
     depths = XListDepths (dpy, scr, &ndepths);
     if (!depths) ndepths = 0;
     printf ("  depths (%d):    ", ndepths);
@@ -376,7 +416,6 @@ print_screen_info(Display *dpy, int scr)
 	printf ("  largest cursor:    %dx%d\n", width, height);
     printf ("  current input event mask:    0x%lx\n", EventMaskOfScreen (s));
     (void) print_event_mask (eventbuf, 79, 4, EventMaskOfScreen (s));
-		      
 
     nvi = 0;
     viproto.screen = scr;
@@ -1043,13 +1082,15 @@ void print_xprint_attrpool(const char *name, const char *attrpool)
 static int
 print_xprint_info(Display *dpy, char *extname)
 {  
-  short         majorrev,
-                minorrev;
-  int           xp_event_base,
-                xp_error_base;
-  XPPrinterList printerlist;
-  int           plcount,
-                i;
+  short           majorrev,
+                  minorrev;
+  int             xp_event_base,
+                  xp_error_base;
+  XPPrinterList   printerlist;
+  Screen        **pscreens;
+  int             plcount,
+                  pscrcount,
+                  i;
 
   if (XpQueryVersion(dpy, &majorrev, &minorrev) == False) {
     return 0;
@@ -1062,8 +1103,19 @@ print_xprint_info(Display *dpy, char *extname)
     return 0;
   }
   
+  /* Print event info */
   printf("  xp_event_base=%d, xp_error_base=%d\n", xp_event_base, xp_error_base);
+  
+  /* Print info which screens support the Xprint extension */
+  printf("  Print screens = {");
+  pscreens = XpQueryScreens(dpy, &pscrcount);
+  for( i = 0 ; i < pscrcount ; i++ ) {
+    printf("%s%d", ((i > 0)?(", "):("")), (int)XScreenNumberOfScreen(pscreens[i]));
+  }
+  XFree(pscreens);
+  printf("}\n");
 
+  /* Enumerate the list of printers */
   printerlist = XpGetPrinterList(dpy, NULL, &plcount);
   /* Print number of printers, then each printer name and description */
   printf("  Found %d printers on this server.\n", plcount);
@@ -1072,6 +1124,7 @@ print_xprint_info(Display *dpy, char *extname)
            i, NULLSTR(printerlist[i].name), NULLSTR(printerlist[i].desc));
   }
   
+  /* Enumerate the list of printers with details */
   for( i = 0 ; i < plcount ; i++) {
     char       *printername = printerlist[i].name;
     XPContext   pcontext;
