@@ -22,7 +22,10 @@
 .\" not be used in advertising or otherwise to promote the sale, use or
 .\" other dealings in this Software without prior written authorization
 .\" from The Open Group.
-.TH XDPYINFO 1 "Release 6.4" "X Version 11"
+.\"
+.\" $XFree86: xc/programs/xdpyinfo/xdpyinfo.man,v 3.8 2001/12/14 20:01:30 dawes Exp $
+.\"
+.TH XDPYINFO 1 __xorgversion__
 .SH NAME
 xdpyinfo \- display information utility for X
 .SH SYNOPSIS
@@ -55,6 +58,9 @@ and the server is displayed.
 .B DISPLAY
 To get the default host, display number, and screen.
 .SH "SEE ALSO"
-X(1), xwininfo(1), xprop(1), xrdb(1)
+X(__miscmansuffix__), xwininfo(1), xprop(1), xrdb(1)
 .SH AUTHOR
 Jim Fulton, MIT X Consortium
+.br
+Support for the XFree86-VidModeExtension, XFree86-DGA, XFree86-Misc,
+and XKB extensions added by Joe Moss
