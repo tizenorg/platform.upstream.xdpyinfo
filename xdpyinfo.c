@@ -174,6 +174,18 @@ print_display_info(Display *dpy)
 	printf("\n");
     }
 
+    if (strstr(ServerVendor (dpy), "X.Org")) {
+	int vendrel = VendorRelease(dpy);
+
+	printf("X.Org version: ");
+	printf("%d.%d.%d", vendrel / 10000000,
+	       (vendrel /   100000) % 100,
+	       (vendrel /     1000) % 100);
+	if (vendrel % 1000)
+	    printf(".%d", vendrel % 1000);
+	printf("\n");
+    }
+
     req_size = XExtendedMaxRequestSize (dpy);
     if (!req_size) req_size = XMaxRequestSize (dpy);
     printf ("maximum request size:  %ld bytes\n", req_size * 4);
