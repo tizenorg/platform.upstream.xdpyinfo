@@ -5,6 +5,7 @@
  *
  * 
 Copyright 1988, 1998  The Open Group
+Copyright 2005 Hitachi, Ltd.
 
 Permission to use, copy, modify, distribute, and sell this software and its
 documentation for any purpose is hereby granted without fee, provided that
@@ -343,6 +344,8 @@ print_visual_info(XVisualInfo *vip)
 	    vip->bits_per_rgb);
 }
 
+/* xc/programs/twm/twm.c has a copy of |hasExtension()|, please
+ * keep both versions in sync... */
 static
 Bool hasExtension(Display *dpy, char *extname)
 {
@@ -356,6 +359,29 @@ Bool hasExtension(Display *dpy, char *extname)
   return i != num_extensions;
 }
 
+/* xc/programs/twm/twm.c has a copy of |IsPrintScreen()|, please
+ * keep both versions in sync... */
+static
+Bool IsPrintScreen(Screen *s)
+{
+    Display *dpy = XDisplayOfScreen(s);
+    int      i;
+
+    /* Check whether this is a screen of a print DDX */
+    if (hasExtension(dpy, XP_PRINTNAME)) {
+        Screen **pscreens;
+        int      pscrcount;
+
+        pscreens = XpQueryScreens(dpy, &pscrcount);
+        for( i = 0 ; (i < pscrcount) && pscreens ; i++ ) {
+            if (s == pscreens[i]) {
+                return True;
+            }
+        }
+        XFree(pscreens);                      
+    }
+    return False;
+}
 
 static void
 print_screen_info(Display *dpy, int scr)
@@ -370,7 +396,7 @@ print_screen_info(Display *dpy, int scr)
     double xres, yres;
     int ndepths = 0, *depths = NULL;
     unsigned int width, height;
-    Bool isPrintScreen = False;
+    Bool isPrintScreen = False; /* Initalise this if |INCLUDE_XPRINT_SUPPORT| is not set */
 
     /*
      * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
@@ -390,19 +416,7 @@ print_screen_info(Display *dpy, int scr)
 
 #ifdef INCLUDE_XPRINT_SUPPORT
     /* Check whether this is a screen of a print DDX */
-    if (hasExtension(dpy, XP_PRINTNAME)) {
-        Screen **pscreens;
-        int      pscrcount;
-
-        pscreens = XpQueryScreens(dpy, &pscrcount);
-        for( i = 0 ; (i < pscrcount) && pscreens ; i++ ) {
-            if (scr == (int)XScreenNumberOfScreen(pscreens[i])) {
-                isPrintScreen = True;
-                break;
-            }
-        }
-        XFree(pscreens);		      
-    }
+    isPrintScreen = IsPrintScreen(s);
     printf ("  print screen:    %s\n", isPrintScreen?"yes":"no");
 #endif /* INCLUDE_XPRINT_SUPPORT */
 
