@@ -67,7 +67,7 @@ in this Software without prior written authorization from The Open Group.
 #ifdef XRENDER
 #include <X11/extensions/Xrender.h>
 #endif
-#ifdef XINERAMA
+#ifdef PANORAMIX
 #include <X11/extensions/Xinerama.h>
 #endif
 #include <X11/Xos.h>
@@ -971,7 +971,7 @@ print_xrender_info(Display *dpy, char *extname)
 #endif /* XRENDER */
 
 
-#ifdef XINERAMA
+#ifdef PANORAMIX
 
 static int
 print_xinerama_info(Display *dpy, char *extname)
@@ -983,27 +983,25 @@ print_xinerama_info(Display *dpy, char *extname)
   
   print_standard_extension_info(dpy, extname, majorrev, minorrev);
 
-  if (!XineramaActive(dpy, DefaultRootWindow(dpy))) {
+  if (!XineramaIsActive(dpy)) {
     printf("  Xinerama is inactive.\n");
   } else {
     int i, count = 0; 
-    XRectangle *screens;
-
-    XineramaGetData(dpy, DefaultRootWindow(dpy), &screens, &count);
+    XineramaScreenInfo *xineramaScreens = XineramaQueryScreens(dpy, &count);
     
     for (i = 0; i < count; i++) {
-      XRectangle *xs = &screens[i];
-      printf("  head #%d: %dx%d @ %d,%d\n", i, 
-             xs->width, xs->height, xs->x, xs->y);
+      XineramaScreenInfo *xs = &xineramaScreens[i];
+      printf("  head #%d: %dx%d @ %d,%d\n", xs->screen_number, 
+             xs->width, xs->height, xs->x_org, xs->y_org);
     }
     
-    XFree(screens);
+    XFree(xineramaScreens);
   }
   
   return 1;
 }
 
-#endif /* XINERAMA */
+#endif /* PANORAMIX */
 
 
 /* utilities to manage the list of recognized extensions */
@@ -1050,7 +1048,7 @@ ExtensionPrintInfo known_extensions[] =
 #ifdef XRENDER
     {RENDER_NAME, print_xrender_info, False},
 #endif
-#ifdef XINERAMA
+#ifdef PANORAMIX
     {"XINERAMA", print_xinerama_info, False},
 #endif
     /* add new extensions here */
