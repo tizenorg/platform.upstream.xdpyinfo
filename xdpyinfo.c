@@ -29,7 +29,7 @@ in this Software without prior written authorization from The Open Group.
  * Author:  Jim Fulton, MIT X Consortium
  */
 
-/* $XFree86: xc/programs/xdpyinfo/xdpyinfo.c,v 3.30 2003/11/17 22:20:51 dawes Exp $ */
+/* $XFree86$ */
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
