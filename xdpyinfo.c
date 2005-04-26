@@ -359,6 +359,7 @@ Bool hasExtension(Display *dpy, char *extname)
   return i != num_extensions;
 }
 
+#ifdef INCLUDE_XPRINT_SUPPORT
 /* xc/programs/twm/twm.c has a copy of |IsPrintScreen()|, please
  * keep both versions in sync... */
 static
@@ -382,6 +383,7 @@ Bool IsPrintScreen(Screen *s)
     }
     return False;
 }
+#endif /* INCLUDE_XPRINT_SUPPORT */
 
 static void
 print_screen_info(Display *dpy, int scr)
