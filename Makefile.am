@@ -21,12 +21,35 @@
 
 bin_PROGRAMS = xdpyinfo
 
-xdpyinfo_CFLAGS = $(DEP_CFLAGS)
-xdpyinfo_LDADD = $(DEP_LIBS)
+AM_CFLAGS = \
+	$(DEP_CFLAGS) \
+	$(XEXT_CFLAGS) \
+	$(XKB_CFLAGS) \
+	$(XF86VIDMODE_CFLAGS) \
+	$(XF86DGA_CFLAGS) \
+	$(XF86MISC_CFLAGS) \
+	$(XINPUT_CFLAGS) \
+	$(XRENDER_CFLAGS) \
+	$(XINERAMA_CFLAGS) \
+	$(DMX_CFLAGS) \
+	$(XPRINT_CFLAGS)
+	
+xdpyinfo_LDADD = \
+	$(DEP_LIBS) \
+	$(XEXT_LIBS) \
+	$(XKB_LIBS) \
+	$(XF86VIDMODE_LIBS) \
+	$(XF86DGA_LIBS) \
+	$(XF86MISC_LIBS) \
+	$(XINPUT_LIBS) \
+	$(XRENDER_LIBS) \
+	$(XINERAMA_LIBS) \
+	$(DMX_LIBS) \
+	$(XPRINT_LIBS)
 
 xdpyinfo_SOURCES =	\
         xdpyinfo.c
 
-dist_man_MANS = \
+dist_man1_MANS = \
         xdpyinfo.man
 

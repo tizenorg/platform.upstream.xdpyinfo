@@ -1,0 +1,8 @@
+2005-07-07  Keith Packard  <keithp@keithp.com>
+
+	* Makefile.am:
+	* configure.ac:
+	Autodetect extension support. Install manual as xdpyinfo.1
+	Note that autodetection requires changes to xdpyinfo.c as well,
+	which currently lives in the monolithic tree. These changes
+	don't have any effect on monolithic builds.
