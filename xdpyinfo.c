@@ -32,6 +32,54 @@ in this Software without prior written authorization from The Open Group.
 
 /* $XFree86: xc/programs/xdpyinfo/xdpyinfo.c,v 3.29 2003/04/14 20:38:10 herrb Exp $ */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+# if HAVE_X11_EXTENSIONS_MULTIBUF_H
+#  define MULTIBUFFER
+# endif
+
+# if HAVE_X11_EXTENSIONS_XSHM_H
+#  define MITSHM
+# endif
+
+# if HAVE_X11_EXTENSIONS_XKB_H && HAVE_X11_XKBLIB_H
+#  define XKB
+# endif
+
+# if HAVE_X11_EXTENSIONS_XF86VMODE_H && HAVE_X11_EXTENSIONS_XF86VMSTR_H
+#  define XF86VIDMODE
+# endif
+
+# if HAVE_X11_EXTENSIONS_XF86DGA_H && HAVE_X11_EXTENSIONS_XF86DGASTR_H
+#  define XFreeXDGA
+# endif
+
+# if HAVE_X11_EXTENSIONS_XF86MISC_H && HAVE_X11_EXTENSIONS_XF86MSCSTR_H
+#  define XF86MISC
+# endif
+
+# if HAVE_X11_EXTENSIONS_XINPUT_H
+#  define XINPUT
+# endif
+
+# if HAVE_X11_EXTENSIONS_XRENDER_H
+#  define XRENDER
+# endif
+
+# if HAVE_X11_EXTENSIONS_XINERAMA_H
+#  define PANORAMIX
+# endif
+
+# if HAVE_X11_EXTENSIONS_DMXEXT_H
+#  define DMX
+# endif
+
+# if HAVE_X11_EXTENSIONS_PRINT_H
+#  define INCLUDE_XPRINT_SUPPORT
+# endif
+
+#endif
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #ifdef MULTIBUFFER
