@@ -40,19 +40,19 @@ PKG_CHECK_MODULES(XEXT, xextproto xext,
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XEXTPROTO_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/multibuf.h X11/extensions/XShm.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XKB, kbproto x11, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XKB_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/XKB.h X11/XKBlib.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XF86VIDMODE, xf86vidmodeproto xxf86vm, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XF86VIDMODE_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/xf86vmode.h X11/extensions/xf86vmstr.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XF86DGA, xf86dgaproto xxf86dga, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
@@ -60,7 +60,7 @@ PKG_CHECK_MODULES(XF86DGA, xf86dgaproto xxf86dga,
 	AC_CHECK_HEADERS([X11/extensions/xf86dga.h X11/extensions/xf86dgastr.h],,,
 			 [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XF86MISC, xf86miscproto xxf86misc, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
@@ -68,36 +68,36 @@ PKG_CHECK_MODULES(XF86MISC, xf86miscproto xxf86misc,
 	AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
 			  [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XINPUT, inputproto xi, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XINPUT_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/XInput.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XRENDER, renderproto xrender, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XRENDER_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/Xrender.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XINERAMA, panoramixproto xinerama, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XINERAMA_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/Xinerama.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(DMX, dmxproto dmx, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $DMX_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/dmxext.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 PKG_CHECK_MODULES(XPRINT, printproto xp, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $XPRINT_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 AC_OUTPUT([Makefile])
