@@ -22,7 +22,7 @@
 bin_PROGRAMS = xdpyinfo
 
 AM_CFLAGS = \
-	$(DEP_CFLAGS) \
+	$(XDPYINFO_CFLAGS) \
 	$(XEXT_CFLAGS) \
 	$(XKB_CFLAGS) \
 	$(XF86VIDMODE_CFLAGS) \
@@ -35,7 +35,7 @@ AM_CFLAGS = \
 	$(XPRINT_CFLAGS)
 	
 xdpyinfo_LDADD = \
-	$(DEP_LIBS) \
+	$(XDPYINFO_LIBS) \
 	$(XEXT_LIBS) \
 	$(XKB_LIBS) \
 	$(XF86VIDMODE_LIBS) \
