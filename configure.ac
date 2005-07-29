@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to create configure.
 
 AC_PREREQ([2.57])
-AC_INIT(xdpyinfo,[7.0], [xorg@freedesktop.org],xdpyinfo)
+AC_INIT(xdpyinfo,[0.99.0], [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],xdpyinfo)
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
@@ -99,5 +99,7 @@ PKG_CHECK_MODULES(XPRINT, printproto xp,
 	CPPFLAGS="$CPPFLAGS $XPRINT_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+XORG_RELEASE_VERSION
 
 AC_OUTPUT([Makefile])
