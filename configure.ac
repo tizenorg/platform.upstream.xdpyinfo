@@ -82,7 +82,7 @@ PKG_CHECK_MODULES(DPY_XRENDER, renderproto xrender,
 	AC_CHECK_HEADERS([X11/extensions/Xrender.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-PKG_CHECK_MODULES(DPY_XINERAMA, panoramixproto xinerama, 
+PKG_CHECK_MODULES(DPY_XINERAMA, xineramaproto xinerama, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $DPY_XINERAMA_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/Xinerama.h],,,[#include <X11/Xlib.h>])
