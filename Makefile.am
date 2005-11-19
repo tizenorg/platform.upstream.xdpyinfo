@@ -32,7 +32,8 @@ AM_CFLAGS = \
 	$(DPY_XRENDER_CFLAGS) \
 	$(DPY_XINERAMA_CFLAGS) \
 	$(DPY_DMX_CFLAGS) \
-	$(DPY_XPRINT_CFLAGS)
+	$(DPY_XPRINT_CFLAGS) \
+	$(DPY_XTST_CFLAGS)
 	
 xdpyinfo_LDADD = \
 	$(XDPYINFO_LIBS) \
@@ -45,7 +46,8 @@ xdpyinfo_LDADD = \
 	$(DPY_XRENDER_LIBS) \
 	$(DPY_XINERAMA_LIBS) \
 	$(DPY_DMX_LIBS) \
-	$(DPY_XPRINT_LIBS)
+	$(DPY_XPRINT_LIBS) \
+	$(DPY_XTST_LIBS)
 
 xdpyinfo_SOURCES =	\
         xdpyinfo.c
