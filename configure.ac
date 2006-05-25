@@ -57,13 +57,20 @@ PKG_CHECK_MODULES(DPY_XF86VIDMODE, xxf86vm,
 	AC_CHECK_HEADERS([X11/extensions/xf86vmode.h X11/extensions/xf86vmstr.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-PKG_CHECK_MODULES(DPY_XF86DGA, xxf86dga, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $DPY_XF86DGA_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/xf86dga.h X11/extensions/xf86dgastr.h],,,
-			 [#include <X11/Xlib.h>
+AC_ARG_WITH(dga, AC_HELP_STRING([--without-dga],[Disable dga support.]), 
+		[USE_DGA="$withval"], [USE_DGA="yes"])
+if test "x$USE_DGA" != "xno" ; then
+	PKG_CHECK_MODULES(DPY_XF86DGA, xxf86dga, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $DPY_XF86DGA_CFLAGS $DPY_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/xf86dga.h X11/extensions/xf86dgastr.h],,,
+				 [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without dga"
+fi
+
 
 PKG_CHECK_MODULES(DPY_XF86MISC, xxf86misc, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
@@ -85,17 +92,29 @@ PKG_CHECK_MODULES(DPY_XRENDER, xrender,
 	AC_CHECK_HEADERS([X11/extensions/Xrender.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-PKG_CHECK_MODULES(DPY_XINERAMA, xinerama, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $DPY_XINERAMA_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/Xinerama.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+AC_ARG_WITH(xinerama, AC_HELP_STRING([--without-xinerama],[Disable xinerama support.]),
+		[USE_XINERAMA="$withval"], [USE_XINERAMA="yes"])
+if test "x$USE_XINERAMA" != "xno" ; then
+	PKG_CHECK_MODULES(DPY_XINERAMA, xinerama, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $DPY_XINERAMA_CFLAGS $DPY_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/Xinerama.h],,,[#include <X11/Xlib.h>])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without xinerama"
+fi
 
-PKG_CHECK_MODULES(DPY_DMX, dmx, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $DPY_DMX_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/dmxext.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+AC_ARG_WITH(dmx, AC_HELP_STRING([--without-dmx],[Disable dmx support.]),
+		[USE_DMX="$withval"], [USE_DMX="yes"])
+if test "x$USE_DMX" != "xno" ; then
+	PKG_CHECK_MODULES(DPY_DMX, dmx, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $DPY_DMX_CFLAGS $DPY_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/dmxext.h],,,[#include <X11/Xlib.h>])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without dmx"
+fi
 
 PKG_CHECK_MODULES(DPY_XPRINT, xp, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
