@@ -109,6 +109,9 @@ PKG_CHECK_MODULES(DPY_XTST, xtst,
 	AC_CHECK_HEADERS([X11/extensions/record.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
+dnl Allow checking code with lint, sparse, etc.
+XORG_WITH_LINT
+
 XORG_MANPAGE_SECTIONS
 XORG_RELEASE_VERSION
 
