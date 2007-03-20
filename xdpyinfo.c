@@ -986,6 +986,7 @@ print_xinput_info(Display *dpy, char *extname)
 
   print_standard_extension_info(dpy, extname, ext->major_version,
 				ext->minor_version);
+  XFree(ext);
 
   extensions = XListExtensions(dpy, &num_extensions);
   for (loop = 0; loop < num_extensions &&
