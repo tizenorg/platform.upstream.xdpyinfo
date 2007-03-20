@@ -34,7 +34,7 @@ AM_CFLAGS = \
 	$(DPY_DMX_CFLAGS) \
 	$(DPY_XPRINT_CFLAGS) \
 	$(DPY_XTST_CFLAGS)
-	
+
 xdpyinfo_LDADD = \
 	$(XDPYINFO_LIBS) \
 	$(DPY_XEXT_LIBS) \
@@ -60,8 +60,14 @@ appmandir = $(APP_MAN_DIR)
 
 appman_DATA = $(appman_PRE:man=@APP_MAN_SUFFIX@)
 
-EXTRA_DIST = $(appman_PRE)
+EXTRA_DIST = $(appman_PRE) ChangeLog
 CLEANFILES = $(appman_DATA)
+MAINTAINERCLEANFILES = ChangeLog
+
+ChangeLog:
+	(GIT_DIR=$(top_srcdir)/.git git-log > .changelog.tmp && mv .changelog.tmp ChangeLog; rm -f .changelog.tmp) || (touch ChangeLog; echo 'git directory not found: installing possibly empty changelog.' >&2)
+
+dist-hook: ChangeLog
 
 SED = sed
 
