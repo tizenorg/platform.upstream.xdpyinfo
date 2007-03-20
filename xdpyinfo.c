@@ -800,6 +800,7 @@ print_XF86VidMode_info(Display *dpy, char *extname)
         if (modelines[i]->flags & V_DBLSCAN)   printf(" doublescan");
         printf("\n");
       }
+      XFree(modelines);
 
       if (!XF86VidModeGetModeLine(dpy, DefaultScreen(dpy),
 				  &dotclock, &modeline))
