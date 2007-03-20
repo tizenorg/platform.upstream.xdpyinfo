@@ -1,7 +1,7 @@
 /*
  * $Xorg: xdpyinfo.c,v 1.5 2001/02/09 02:05:41 xorgcvs Exp $
  * 
- * xdpyinfo - print information about X display connecton
+ * xdpyinfo - print information about X display connection
  *
  * 
 Copyright 1988, 1998  The Open Group
@@ -438,7 +438,7 @@ print_screen_info(Display *dpy, int scr)
 {
     Screen *s = ScreenOfDisplay (dpy, scr);  /* opaque structure */
     XVisualInfo viproto;		/* fill in for getting info */
-    XVisualInfo *vip;			/* retured info */
+    XVisualInfo *vip;			/* returned info */
     int nvi;				/* number of elements returned */
     int i;				/* temp variable: iterator */
     char eventbuf[80];			/* want 79 chars per line + nul */
@@ -446,7 +446,7 @@ print_screen_info(Display *dpy, int scr)
     double xres, yres;
     int ndepths = 0, *depths = NULL;
     unsigned int width, height;
-    Bool isPrintScreen = False; /* Initalise this if |INCLUDE_XPRINT_SUPPORT| is not set */
+    Bool isPrintScreen = False; /* Initialise this if |INCLUDE_XPRINT_SUPPORT| is not set */
 
     /*
      * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
