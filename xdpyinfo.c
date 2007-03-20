@@ -1049,7 +1049,7 @@ print_xrender_info(Display *dpy, char *extname)
   XFreeExtensionList(extensions);
   if (loop != num_extensions) {
     printf ("  Render formats :\n");
-    for (count = 0; (pictform = XRenderFindFormat (dpy, 0, 0, count)); count++)
+    for (count = 0; (pictform = XRenderFindFormat (dpy, 0, NULL, count)); count++)
     {
       printf  ("  pict format:\n");
       printf  ("\tformat id:    0x%lx\n", pictform->id);
