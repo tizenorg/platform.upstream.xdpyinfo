@@ -424,6 +424,7 @@ Bool IsPrintScreen(Screen *s)
         pscreens = XpQueryScreens(dpy, &pscrcount);
         for( i = 0 ; (i < pscrcount) && pscreens ; i++ ) {
             if (s == pscreens[i]) {
+                XFree(pscreens);
                 return True;
             }
         }
