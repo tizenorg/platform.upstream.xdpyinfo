@@ -1425,12 +1425,15 @@ print_known_extensions(FILE *f)
     int i, col;
     for (i = 0, col = 6; i < num_known_extensions; i++)
     {
-	if ((col += strlen(known_extensions[i].extname)+1) > 79)
+	int extlen = strlen(known_extensions[i].extname) + 1;
+	
+	if ((col + extlen) > 79)
 	{
 		col = 6;
 		fprintf(f, "\n     ");
 	}
 	fprintf(f, "%s ", known_extensions[i].extname);
+	col += extlen;
     }
 }
 
