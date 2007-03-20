@@ -1120,6 +1120,7 @@ print_xrender_info(Display *dpy, char *extname)
 	for (count = 0; (pictform = XRenderFindFormat (dpy, PictFormatDepth, &templ, count)); count++)
 	  printf("       pict format id: 0x%lx\n", pictform->id);
       }
+      if (depths) XFree (depths);
     }
     return 1;
   }
