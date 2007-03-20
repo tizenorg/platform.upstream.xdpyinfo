@@ -776,6 +776,10 @@ print_XF86VidMode_info(Display *dpy, char *extname)
         printf("    vsync range %d: %6.2f - %6.2f\n", i, monitor.vsync[i].lo,
                monitor.vsync[i].hi);
     }
+    XFree(monitor.vendor);
+    XFree(monitor.model);
+    XFree(monitor.hsync);
+    XFree(monitor.vsync);
 
     if ((majorrev > 0) || (majorrev == 0 && minorrev > 5)) {
       if (!XF86VidModeGetAllModeLines(dpy, DefaultScreen(dpy), &modecount,
@@ -863,6 +867,7 @@ print_XF86Misc_info(Display *dpy, char *extname)
 	return 0;
       printf("  Mouse Settings-       Device: %s, Type: ",
 	strlen(mouseinfo.device) == 0 ? "None": mouseinfo.device);
+      XFree(mouseinfo.device);
       if (mouseinfo.type == MTYPE_XQUEUE)
 	printf("Xqueue\n");
       else if (mouseinfo.type == MTYPE_OSMOUSE)
