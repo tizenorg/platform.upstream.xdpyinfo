@@ -1014,6 +1014,16 @@ print_xinput_info(Display *dpy, char *extname)
 	  case IsXExtensionDevice:
 	      printf("XExtensionDevice]\n");
 	      break;
+#ifdef IsXExtensionKeyboard
+	  case IsXExtensionKeyboard:
+	      printf("XExtensionKeyboard]\n");
+	      break;
+#endif
+#ifdef IsXExtensionPointer
+	  case IsXExtensionPointer:
+	      printf("XExtensionPointer]\n");
+	      break;
+#endif
 	  default:
 	      printf("invalid value]\n");
 	      break;
