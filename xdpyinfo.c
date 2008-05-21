@@ -135,6 +135,14 @@ in this Software without prior written authorization from The Open Group.
 char *ProgramName;
 Bool queryExtensions = False;
 
+static int
+silent_errors(Display *dpy, XErrorEvent *ev)
+{
+    return 0;
+}
+
+static int (*old_handler)(Display *, XErrorEvent *) = NULL;
+
 static int print_event_mask(char *buf, int lastcol, int indent, long mask);
 
 static int StrCmp(const void *a, const  void *b)
@@ -730,11 +738,15 @@ print_dga_info(Display *dpy, char *extname)
 	return 1;
     }
 
+    old_handler = XSetErrorHandler(silent_errors);
+
     if (!XF86DGAGetVideoLL(dpy, DefaultScreen(dpy), &offset,
 			    &width, &bank, &ram))
 	return 0;
     printf("  Base address = 0x%X, Width = %d, Bank size = %d,"
 	   " RAM size = %dk\n", offset, width, bank, ram);
+
+    XSetErrorHandler(old_handler);
 
     return 1;
 }
@@ -856,6 +868,8 @@ print_XF86Misc_info(Display *dpy, char *extname)
 	return 0;
     print_standard_extension_info(dpy, extname, majorrev, minorrev);
 
+    old_handler = XSetErrorHandler(silent_errors);
+
     if ((majorrev > 0) || (majorrev == 0 && minorrev > 0)) {
       if (!XF86MiscGetKbdSettings(dpy, &kbdinfo))
 	return 0;
@@ -886,6 +900,8 @@ print_XF86Misc_info(Display *dpy, char *extname)
 		+(mouseinfo.flags & MF_CLEAR_RTS? 1: 0)] );
       printf("                        Buttons: %d\n", mouseinfo.buttons);
     }
+
+    XSetErrorHandler(old_handler);
 
     return 1;
 }
