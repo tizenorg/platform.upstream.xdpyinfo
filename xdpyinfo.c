@@ -778,7 +778,9 @@ print_XF86VidMode_info(Display *dpy, char *extname)
     if (!XF86VidModeGetMonitor(dpy, DefaultScreen(dpy), &monitor))
 	return 0;
     printf("  Monitor Information:\n");
-    printf("    Vendor: %s, Model: %s\n", monitor.vendor, monitor.model);
+    printf("    Vendor: %s, Model: %s\n", 
+	monitor.vendor == NULL ? "" : monitor.vendor,
+	monitor.model == NULL ? "" : monitor.model);
     printf("    Num hsync: %d, Num vsync: %d\n", monitor.nhsync, monitor.nvsync);
     for (i = 0; i < monitor.nhsync; i++) {
         printf("    hsync range %d: %6.2f - %6.2f\n", i, monitor.hsync[i].lo,
