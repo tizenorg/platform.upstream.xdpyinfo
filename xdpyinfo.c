@@ -132,8 +132,8 @@ in this Software without prior written authorization from The Open Group.
 /* Turn a NULL pointer string into an empty string */
 #define NULLSTR(x) (((x)!=NULL)?(x):(""))
 
-char *ProgramName;
-Bool queryExtensions = False;
+static char *ProgramName;
+static Bool queryExtensions = False;
 
 static int
 silent_errors(Display *dpy, XErrorEvent *ev)
@@ -725,7 +725,8 @@ print_shape_info(Display *dpy, char *extname)
 static int
 print_dga_info(Display *dpy, char *extname)
 {
-    int majorrev, minorrev, width, bank, ram, offset, flags;
+    unsigned int offset;
+    int majorrev, minorrev, width, bank, ram, flags;
 
     if (!XF86DGAQueryVersion(dpy, &majorrev, &minorrev))
 	return 0;
@@ -849,14 +850,14 @@ print_XF86VidMode_info(Display *dpy, char *extname)
 
 #ifdef XF86MISC
 
-char *kbdtable[] = { "Unknown", "84-key", "101-key", "Other", "Xqueue" };
-char *msetable[] = { "None", "Microsoft", "MouseSystems", "MMSeries",
+static char *kbdtable[] = { "Unknown", "84-key", "101-key", "Other", "Xqueue" };
+static char *msetable[] = { "None", "Microsoft", "MouseSystems", "MMSeries",
 		     "Logitech", "BusMouse", "Mouseman", "PS/2", "MMHitTab",
 		     "GlidePoint", "IntelliMouse", "ThinkingMouse",
 		     "IMPS/2", "ThinkingMousePS/2", "MouseManPlusPS/2",
 		     "GlidePointPS/2", "NetMousePS/2", "NetScrollPS/2",
 		     "SysMouse", "Auto" };
-char *flgtable[] = { "None", "ClearDTR", "ClearRTS",
+static char *flgtable[] = { "None", "ClearDTR", "ClearRTS",
 		     "ClearDTR and ClearRTS" };
 
 static int
@@ -1411,7 +1412,7 @@ typedef struct {
     Bool printit;
 } ExtensionPrintInfo;
 
-ExtensionPrintInfo known_extensions[] =
+static ExtensionPrintInfo known_extensions[] =
 {
 #ifdef MITSHM
     {"MIT-SHM",	print_mitshm_info, False},
@@ -1454,7 +1455,7 @@ ExtensionPrintInfo known_extensions[] =
     /* add new extensions here */
 };
 
-int num_known_extensions = sizeof known_extensions / sizeof known_extensions[0];
+static int num_known_extensions = sizeof known_extensions / sizeof known_extensions[0];
 
 static void
 print_known_extensions(FILE *f)

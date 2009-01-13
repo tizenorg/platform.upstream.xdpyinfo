@@ -19,3 +19,7 @@ stamp-h1
 xdpyinfo
 xdpyinfo.1
 *~
+*.o
+xdpyinfo-*.tar.*
+ChangeLog
+tags
