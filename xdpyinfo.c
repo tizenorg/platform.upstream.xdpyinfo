@@ -66,6 +66,10 @@ in this Software without prior written authorization from The Open Group.
 #  define XRENDER
 # endif
 
+# if HAVE_X11_EXTENSIONS_XCOMPOSITE_H
+#  define COMPOSITE
+# endif
+
 # if HAVE_X11_EXTENSIONS_XINERAMA_H
 #  define PANORAMIX
 # endif
@@ -115,6 +119,9 @@ in this Software without prior written authorization from The Open Group.
 #endif
 #ifdef XRENDER
 #include <X11/extensions/Xrender.h>
+#endif
+#ifdef COMPOSITE
+#include <X11/extensions/Xcomposite.h>
 #endif
 #ifdef PANORAMIX
 #include <X11/extensions/Xinerama.h>
@@ -1166,6 +1173,20 @@ print_xrender_info(Display *dpy, char *extname)
 }
 #endif /* XRENDER */
 
+#ifdef COMPOSITE
+static int
+print_composite_info(Display *dpy, char *extname)
+{
+    int majorrev, minorrev, foo;
+
+    if (!XCompositeQueryExtension(dpy, &foo, &foo))
+	return 0;
+    if (!XCompositeQueryVersion(dpy, &majorrev, &minorrev))
+	return 0;
+    print_standard_extension_info(dpy, extname, majorrev, minorrev);
+    return 1;
+}
+#endif
 
 #ifdef PANORAMIX
 
@@ -1442,6 +1463,9 @@ static ExtensionPrintInfo known_extensions[] =
 #endif
 #ifdef XRENDER
     {RENDER_NAME, print_xrender_info, False},
+#endif
+#ifdef COMPOSITE
+    {COMPOSITE_NAME, print_composite_info, False},
 #endif
 #ifdef PANORAMIX
     {"XINERAMA", print_xinerama_info, False},

@@ -99,6 +99,12 @@ PKG_CHECK_MODULES(DPY_XRENDER, xrender,
 	AC_CHECK_HEADERS([X11/extensions/Xrender.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
+PKG_CHECK_MODULES(DPY_XCOMPOSITE, xcomposite,
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $DPY_XCOMPOSITE_CFLAGS $DPY_X11_CFLAGS"
+	AC_CHECK_HEADERS([X11/extensions/Xcomposite.h],,,[#include <X11/Xlib.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
 AC_ARG_WITH(xinerama, AC_HELP_STRING([--without-xinerama],[Disable xinerama support.]),
 		[USE_XINERAMA="$withval"], [USE_XINERAMA="yes"])
 if test "x$USE_XINERAMA" != "xno" ; then
