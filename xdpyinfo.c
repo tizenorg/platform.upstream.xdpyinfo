@@ -823,7 +823,7 @@ print_XF86VidMode_info(Display *dpy, char *extname)
         if (modelines[i]->flags & V_INTERLACE) printf(" interlace");
         if (modelines[i]->flags & V_CSYNC)     printf(" composite");
         if (modelines[i]->flags & V_PCSYNC)    printf(" +csync");
-        if (modelines[i]->flags & V_PCSYNC)    printf(" -csync");
+        if (modelines[i]->flags & V_NCSYNC)    printf(" -csync");
         if (modelines[i]->flags & V_DBLSCAN)   printf(" doublescan");
         printf("\n");
       }
@@ -846,7 +846,7 @@ print_XF86VidMode_info(Display *dpy, char *extname)
       if (modeline.flags & V_INTERLACE) printf(" interlace");
       if (modeline.flags & V_CSYNC)     printf(" composite");
       if (modeline.flags & V_PCSYNC)    printf(" +csync");
-      if (modeline.flags & V_PCSYNC)    printf(" -csync");
+      if (modeline.flags & V_NCSYNC)    printf(" -csync");
       if (modeline.flags & V_DBLSCAN)   printf(" doublescan");
       printf("\n");
     }
