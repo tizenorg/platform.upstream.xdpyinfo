@@ -60,7 +60,7 @@ PKG_CHECK_MODULES(DPY_XKB, x11,
 PKG_CHECK_MODULES(DPY_XF86VIDMODE, xxf86vm, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $DPY_XF86VIDMODE_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/xf86vmode.h X11/extensions/xf86vmstr.h],,,[#include <X11/Xlib.h>])
+	AC_CHECK_HEADERS([X11/extensions/xf86vmode.h X11/extensions/xf86vmstr.h X11/extensions/xf86vmproto.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
 AC_ARG_WITH(dga, AC_HELP_STRING([--without-dga],[Disable dga support.]), 

@@ -46,7 +46,8 @@ in this Software without prior written authorization from The Open Group.
 #  define XKB
 # endif
 
-# if HAVE_X11_EXTENSIONS_XF86VMODE_H && HAVE_X11_EXTENSIONS_XF86VMSTR_H
+# if HAVE_X11_EXTENSIONS_XF86VMODE_H && \
+	(HAVE_X11_EXTENSIONS_XF86VMSTR_H || HAVE_X11_EXTENSIONS_XF86VMPROTO_H)
 #  define XF86VIDMODE
 # endif
 
@@ -104,7 +105,11 @@ in this Software without prior written authorization from The Open Group.
 #endif
 #ifdef XF86VIDMODE
 #include <X11/extensions/xf86vmode.h>
-#include <X11/extensions/xf86vmstr.h>
+# if HAVE_X11_EXTENSIONS_XF86VMPROTO_H /* xf86vidmodeproto 2.2.99.1 & later */
+#  include <X11/extensions/xf86vmproto.h>
+# else
+#  include <X11/extensions/xf86vmstr.h>
+# endif
 #endif
 #ifdef XFreeXDGA
 #include <X11/extensions/xf86dga.h>
