@@ -78,13 +78,19 @@ else
 fi
 
 
-PKG_CHECK_MODULES(DPY_XF86MISC, xxf86misc, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $DPY_XF86MISC_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
-			  [#include <X11/Xlib.h>
+AC_ARG_WITH(xf86misc, AC_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]), 
+		[USE_XF86MISC="$withval"], [USE_XF86MISC="yes"])
+if test "x$USE_XF86MISC" != "xno" ; then
+	PKG_CHECK_MODULES(DPY_XF86MISC, xxf86misc, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $DPY_XF86MISC_CFLAGS $DPY_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
+				  [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without xf86misc"
+fi
 
 PKG_CHECK_MODULES(DPY_XINPUT, xi, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
@@ -128,11 +134,17 @@ else
 	echo "without dmx"
 fi
 
-PKG_CHECK_MODULES(DPY_XPRINT, xp, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $DPY_XPRINT_CFLAGS $DPY_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+AC_ARG_WITH(xprint, AC_HELP_STRING([--without-xprint],[Disable xprint support.]), 
+		[USE_XPRINT="$withval"], [USE_XPRINT="yes"])
+if test "x$USE_XPRINT" != "xno" ; then
+	PKG_CHECK_MODULES(DPY_XPRINT, xp, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $DPY_XPRINT_CFLAGS $DPY_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without xprint"
+fi
 
 PKG_CHECK_MODULES(DPY_XTST, xtst, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
