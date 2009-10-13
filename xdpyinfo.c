@@ -51,7 +51,8 @@ in this Software without prior written authorization from The Open Group.
 #  define XF86VIDMODE
 # endif
 
-# if HAVE_X11_EXTENSIONS_XF86DGA_H && HAVE_X11_EXTENSIONS_XF86DGASTR_H
+# if (HAVE_X11_EXTENSIONS_XXF86DGA_H && HAVE_X11_EXTENSIONS_XF86DGAPROTO_H) \
+  || (HAVE_X11_EXTENSIONS_XF86DGA_H && HAVE_X11_EXTENSIONS_XF86DGASTR_H)
 #  define XFreeXDGA
 # endif
 
@@ -112,8 +113,13 @@ in this Software without prior written authorization from The Open Group.
 # endif
 #endif
 #ifdef XFreeXDGA
-#include <X11/extensions/xf86dga.h>
-#include <X11/extensions/xf86dgastr.h>
+# if HAVE_X11_EXTENSIONS_XXF86DGA_H && HAVE_X11_EXTENSIONS_XF86DGAPROTO_H
+#  include <X11/extensions/Xxf86dga.h>
+#  include <X11/extensions/xf86dgaproto.h>
+# else
+#  include <X11/extensions/xf86dga.h>
+#  include <X11/extensions/xf86dgastr.h>
+# endif
 #endif
 #ifdef XF86MISC
 #include <X11/extensions/xf86misc.h>

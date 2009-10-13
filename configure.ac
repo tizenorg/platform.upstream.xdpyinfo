@@ -69,7 +69,7 @@ if test "x$USE_DGA" != "xno" ; then
 	PKG_CHECK_MODULES(DPY_XF86DGA, xxf86dga, 
 		[SAVE_CPPFLAGS="$CPPFLAGS"
 		CPPFLAGS="$CPPFLAGS $DPY_XF86DGA_CFLAGS $DPY_X11_CFLAGS"
-		AC_CHECK_HEADERS([X11/extensions/xf86dga.h X11/extensions/xf86dgastr.h],,,
+		AC_CHECK_HEADERS([X11/extensions/Xxf86dga.h X11/extensions/xf86dgaproto.h X11/extensions/xf86dga.h X11/extensions/xf86dgastr.h],,,
 				 [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
 		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
