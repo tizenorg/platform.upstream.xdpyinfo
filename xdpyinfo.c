@@ -439,7 +439,6 @@ print_screen_info(Display *dpy, int scr)
     double xres, yres;
     int ndepths = 0, *depths = NULL;
     unsigned int width, height;
-    Bool isPrintScreen = False; /* Initialise this if |INCLUDE_XPRINT_SUPPORT| is not set */
 
     /*
      * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
@@ -456,21 +455,11 @@ print_screen_info(Display *dpy, int scr)
 
     printf ("\n");
     printf ("screen #%d:\n", scr);
-
-    if (isPrintScreen) {
-        /* Print resolution is set on a per-printer basis (per-document
-         * or per-page), the screen itself has no "default" resolution */
-        printf ("  maximum dimensions:    %dx%d pixels\n",
-	        XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr));
-    }
-    else
-    {
-        printf ("  dimensions:    %dx%d pixels (%dx%d millimeters)\n",
-	        XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr),
-	        XDisplayWidthMM(dpy, scr), XDisplayHeightMM (dpy, scr));
-        printf ("  resolution:    %dx%d dots per inch\n", 
-	        (int) (xres + 0.5), (int) (yres + 0.5));
-    }
+    printf ("  dimensions:    %dx%d pixels (%dx%d millimeters)\n",
+	    XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr),
+	    XDisplayWidthMM(dpy, scr), XDisplayHeightMM (dpy, scr));
+    printf ("  resolution:    %dx%d dots per inch\n", 
+	    (int) (xres + 0.5), (int) (yres + 0.5));
     depths = XListDepths (dpy, scr, &ndepths);
     if (!depths) ndepths = 0;
     printf ("  depths (%d):    ", ndepths);
