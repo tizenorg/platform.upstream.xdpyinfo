@@ -135,18 +135,6 @@ else
 	echo "without dmx"
 fi
 
-AC_ARG_WITH(xprint, AC_HELP_STRING([--without-xprint],[Disable xprint support.]), 
-		[USE_XPRINT="$withval"], [USE_XPRINT="yes"])
-if test "x$USE_XPRINT" != "xno" ; then
-	PKG_CHECK_MODULES(DPY_XPRINT, xp, 
-		[SAVE_CPPFLAGS="$CPPFLAGS"
-		CPPFLAGS="$CPPFLAGS $DPY_XPRINT_CFLAGS $DPY_X11_CFLAGS"
-		AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
-		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
-else
-	echo "without xprint"
-fi
-
 PKG_CHECK_MODULES(DPY_XTST, xtst, 
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $DPY_XTST_CFLAGS $DPY_X11_CFLAGS"
