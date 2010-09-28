@@ -1,6 +1,4 @@
 /*
- * $Xorg: xdpyinfo.c,v 1.5 2001/02/09 02:05:41 xorgcvs Exp $
- * 
  * xdpyinfo - print information about X display connection
  *
  * 
@@ -29,8 +27,6 @@ in this Software without prior written authorization from The Open Group.
  *
  * Author:  Jim Fulton, MIT X Consortium
  */
-
-/* $XFree86: xc/programs/xdpyinfo/xdpyinfo.c,v 3.29 2003/04/14 20:38:10 herrb Exp $ */
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
