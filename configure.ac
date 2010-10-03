@@ -36,7 +36,7 @@ XORG_DEFAULT_OPTIONS
 AM_CONFIG_HEADER(config.h)
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XDPYINFO, xext x11 xtst)
+PKG_CHECK_MODULES(XDPYINFO, xext x11 xtst x11-xcb xcb)
 
 # This is used below to allow <X11/Xlib.h> to be found
 PKG_CHECK_MODULES(DPY_X11, x11)

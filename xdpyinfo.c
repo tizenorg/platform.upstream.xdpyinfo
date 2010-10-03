@@ -82,6 +82,7 @@ in this Software without prior written authorization from The Open Group.
 
 #endif
 
+#include <X11/Xlib-xcb.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #ifdef MULTIBUFFER
@@ -170,22 +171,53 @@ print_extension_info(Display *dpy)
     printf ("number of extensions:    %d\n", n);
 
     if (extlist) {
-	register int i;
-	int opcode, event, error;
+	int i;
 
 	qsort(extlist, n, sizeof(char *), StrCmp);
-	for (i = 0; i < n; i++) {
-	    if (!queryExtensions) {
+
+	if (!queryExtensions) {
+	    for (i = 0; i < n; i++) {
 		printf ("    %s\n", extlist[i]);
-		continue;
 	    }
-	    XQueryExtension(dpy, extlist[i], &opcode, &event, &error);
-	    printf ("    %s  (opcode: %d", extlist[i], opcode);
-	    if (event)
-		printf (", base event: %d", event);
-	    if (error)
-		printf (", base error: %d", error);
-	    printf(")\n");
+	} else {
+	    xcb_connection_t *xcb_conn = XGetXCBConnection (dpy);
+	    xcb_query_extension_cookie_t *qe_cookies;
+
+	    qe_cookies = calloc(n, sizeof(xcb_query_extension_cookie_t));
+	    if (!qe_cookies) {
+		perror ("calloc failed to allocate memory for extensions");
+		return;
+	    }
+
+	    /*
+	     * Generate all extension queries at once, so they can be
+	     * sent to the xserver in a single batch
+	     */
+	    for (i = 0; i < n; i++) {
+		qe_cookies[i] = xcb_query_extension (xcb_conn,
+						     strlen(extlist[i]),
+						     extlist[i]);
+	    }
+
+	    /*
+	     * Start processing replies as they come in.
+	     * The first call will flush the queue to the server, then
+	     * each one will wait, if needed, for its reply.
+	     */
+	    for (i = 0; i < n; i++) {
+		xcb_query_extension_reply_t *rep
+		    = xcb_query_extension_reply(xcb_conn, qe_cookies[i], NULL);
+
+		printf ("    %s  (opcode: %d", extlist[i], rep->major_opcode);
+		if (rep->first_event)
+		    printf (", base event: %d", rep->first_event);
+		if (rep->first_error)
+		    printf (", base error: %d", rep->first_error);
+		printf (")\n");
+
+		free (rep);
+	    }
+	    free (qe_cookies);
 	}
 	/* do not free, Xlib can depend on contents being unaltered */
 	/* XFreeExtensionList (extlist); */
