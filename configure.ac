@@ -59,7 +59,7 @@ PKG_CHECK_MODULES(DPY_XF86VIDMODE, xxf86vm,
 	AC_CHECK_HEADERS([X11/extensions/xf86vmode.h X11/extensions/xf86vmstr.h X11/extensions/xf86vmproto.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-AC_ARG_WITH(dga, AC_HELP_STRING([--without-dga],[Disable dga support.]), 
+AC_ARG_WITH(dga, AS_HELP_STRING([--without-dga],[Disable dga support.]), 
 		[USE_DGA="$withval"], [USE_DGA="yes"])
 if test "x$USE_DGA" != "xno" ; then
 	PKG_CHECK_MODULES(DPY_XF86DGA, xxf86dga, 
@@ -74,7 +74,7 @@ else
 fi
 
 
-AC_ARG_WITH(xf86misc, AC_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]), 
+AC_ARG_WITH(xf86misc, AS_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]), 
 		[USE_XF86MISC="$withval"], [USE_XF86MISC="yes"])
 if test "x$USE_XF86MISC" != "xno" ; then
 	PKG_CHECK_MODULES(DPY_XF86MISC, xxf86misc, 
@@ -106,7 +106,7 @@ PKG_CHECK_MODULES(DPY_XCOMPOSITE, xcomposite,
 	AC_CHECK_HEADERS([X11/extensions/Xcomposite.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-AC_ARG_WITH(xinerama, AC_HELP_STRING([--without-xinerama],[Disable xinerama support.]),
+AC_ARG_WITH(xinerama, AS_HELP_STRING([--without-xinerama],[Disable xinerama support.]),
 		[USE_XINERAMA="$withval"], [USE_XINERAMA="yes"])
 if test "x$USE_XINERAMA" != "xno" ; then
 	PKG_CHECK_MODULES(DPY_XINERAMA, xinerama, 
@@ -118,7 +118,7 @@ else
 	echo "without xinerama"
 fi
 
-AC_ARG_WITH(dmx, AC_HELP_STRING([--without-dmx],[Disable dmx support.]),
+AC_ARG_WITH(dmx, AS_HELP_STRING([--without-dmx],[Disable dmx support.]),
 		[USE_DMX="$withval"], [USE_DMX="yes"])
 if test "x$USE_DMX" != "xno" ; then
 	PKG_CHECK_MODULES(DPY_DMX, dmx, 
