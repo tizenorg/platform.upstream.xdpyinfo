@@ -1,7 +1,7 @@
 /*
  * xdpyinfo - print information about X display connection
  *
- * 
+ *
 Copyright 1988, 1998  The Open Group
 Copyright 2005 Hitachi, Ltd.
 
@@ -331,7 +331,7 @@ print_display_info(Display *dpy)
     switch (BitmapBitOrder (dpy)) {
       case LSBFirst:    cp = "LSBFirst"; break;
       case MSBFirst:    cp = "MSBFirst"; break;
-      default:    
+      default:
 	sprintf (dummybuf, "unknown order %d", BitmapBitOrder (dpy));
 	cp = dummybuf;
 	break;
@@ -342,7 +342,7 @@ print_display_info(Display *dpy)
     switch (ImageByteOrder (dpy)) {
       case LSBFirst:    cp = "LSBFirst"; break;
       case MSBFirst:    cp = "MSBFirst"; break;
-      default:    
+      default:
 	sprintf (dummybuf, "unknown order %d", ImageByteOrder (dpy));
 	cp = dummybuf;
 	break;
@@ -416,7 +416,7 @@ print_visual_info(XVisualInfo *vip)
       case PseudoColor:    class = "PseudoColor"; break;
       case TrueColor:    class = "TrueColor"; break;
       case DirectColor:    class = "DirectColor"; break;
-      default:    
+      default:
 	sprintf (errorbuf, "unknown class %d", vip->class);
 	class = errorbuf;
 	break;
@@ -425,7 +425,7 @@ print_visual_info(XVisualInfo *vip)
     printf ("  visual:\n");
     printf ("    visual id:    0x%lx\n", vip->visualid);
     printf ("    class:    %s\n", class);
-    printf ("    depth:    %d plane%s\n", vip->depth, 
+    printf ("    depth:    %d plane%s\n", vip->depth,
 	    vip->depth == 1 ? "" : "s");
     if (vip->class == TrueColor || vip->class == DirectColor)
 	printf ("    available colormap entries:    %d per subfield\n",
@@ -476,9 +476,9 @@ print_screen_info(Display *dpy, int scr)
      *         = N * 25.4 pixels / M inch
      */
 
-    xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
+    xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) /
 	    ((double) DisplayWidthMM(dpy,scr)));
-    yres = ((((double) DisplayHeight(dpy,scr)) * 25.4) / 
+    yres = ((((double) DisplayHeight(dpy,scr)) * 25.4) /
 	    ((double) DisplayHeightMM(dpy,scr)));
 
     printf ("\n");
@@ -486,14 +486,14 @@ print_screen_info(Display *dpy, int scr)
     printf ("  dimensions:    %dx%d pixels (%dx%d millimeters)\n",
 	    XDisplayWidth (dpy, scr),  XDisplayHeight (dpy, scr),
 	    XDisplayWidthMM(dpy, scr), XDisplayHeightMM (dpy, scr));
-    printf ("  resolution:    %dx%d dots per inch\n", 
+    printf ("  resolution:    %dx%d dots per inch\n",
 	    (int) (xres + 0.5), (int) (yres + 0.5));
     depths = XListDepths (dpy, scr, &ndepths);
     if (!depths) ndepths = 0;
     printf ("  depths (%d):    ", ndepths);
     for (i = 0; i < ndepths; i++) {
 	printf ("%d", depths[i]);
-	if (i < ndepths - 1) { 
+	if (i < ndepths - 1) {
 	    putchar (',');
 	    putchar (' ');
 	}
@@ -528,7 +528,7 @@ print_screen_info(Display *dpy, int scr)
     viproto.screen = scr;
     vip = XGetVisualInfo (dpy, VisualScreenMask, &viproto, &nvi);
     printf ("  number of visuals:    %d\n", nvi);
-    printf ("  default visual id:  0x%lx\n", 
+    printf ("  default visual id:  0x%lx\n",
 	    XVisualIDFromVisual (DefaultVisual (dpy, scr)));
     for (i = 0; i < nvi; i++) {
 	print_visual_info (vip+i);
@@ -574,7 +574,7 @@ static struct _event_table {
     { "OwnerGrabButtonMask      ", OwnerGrabButtonMask },
     { NULL, 0 }};
 
-static int                      
+static int
 print_event_mask(char *buf,     /* string to write into */
                  int lastcol,   /* strlen(buf)+1 */
                  int indent,    /* amount by which to indent */
@@ -611,7 +611,7 @@ print_event_mask(char *buf,     /* string to write into */
 }
 
 static void
-print_standard_extension_info(Display *dpy, char *extname, 
+print_standard_extension_info(Display *dpy, char *extname,
 			      int majorrev, int minorrev)
 {
     int opcode, event, error;
@@ -634,7 +634,7 @@ print_multibuf_info(Display *dpy, char *extname)
     int i, j;			/* temp variable: iterator */
     int nmono, nstereo;		/* count */
     XmbufBufferInfo *mono_info = NULL, *stereo_info = NULL; /* arrays */
-    static char *fmt = 
+    static char *fmt =
 	"    visual id, max buffers, depth:    0x%lx, %d, %d\n";
     int scr = 0;
     int majorrev, minorrev;
@@ -727,7 +727,7 @@ print_dga_info(Display *dpy, char *extname)
 	return 0;
     print_standard_extension_info(dpy, extname, majorrev, minorrev);
 
-    if (!XF86DGAQueryDirectVideo(dpy, DefaultScreen(dpy), &flags) 
+    if (!XF86DGAQueryDirectVideo(dpy, DefaultScreen(dpy), &flags)
 	|| ! (flags & XF86DGADirectPresent) )
     {
 	printf("  DGA not available on screen %d.\n", DefaultScreen(dpy));
@@ -749,11 +749,11 @@ print_dga_info(Display *dpy, char *extname)
 #endif
 
 #ifdef XF86VIDMODE
-#define V_PHSYNC        0x001 
+#define V_PHSYNC        0x001
 #define V_NHSYNC        0x002
 #define V_PVSYNC        0x004
 #define V_NVSYNC        0x008
-#define V_INTERLACE     0x010 
+#define V_INTERLACE     0x010
 #define V_DBLSCAN       0x020
 #define V_CSYNC         0x040
 #define V_PCSYNC        0x080
@@ -1017,7 +1017,7 @@ print_xinput_info(Display *dpy, char *extname)
   XExtensionVersion *ext;
 
   ext = XGetExtensionVersion(dpy, extname);
-  
+
   if (!ext || (ext == (XExtensionVersion*) NoSuchExtension))
       return 0;
 
@@ -1088,7 +1088,7 @@ print_xrender_info(Display *dpy, char *extname)
 
   if (!XRenderQueryVersion (dpy, &major, &minor))
     return 0;
-  
+
   print_standard_extension_info(dpy, extname, major, minor);
 
   extensions = XListExtensions(dpy, &num_extensions);
@@ -1201,24 +1201,24 @@ print_xinerama_info(Display *dpy, char *extname)
 
   if (!XineramaQueryVersion (dpy, &majorrev, &minorrev))
     return 0;
-  
+
   print_standard_extension_info(dpy, extname, majorrev, minorrev);
 
   if (!XineramaIsActive(dpy)) {
     printf("  Xinerama is inactive.\n");
   } else {
-    int i, count = 0; 
+    int i, count = 0;
     XineramaScreenInfo *xineramaScreens = XineramaQueryScreens(dpy, &count);
-    
+
     for (i = 0; i < count; i++) {
       XineramaScreenInfo *xs = &xineramaScreens[i];
-      printf("  head #%d: %dx%d @ %d,%d\n", xs->screen_number, 
+      printf("  head #%d: %dx%d @ %d,%d\n", xs->screen_number,
              xs->width, xs->height, xs->x_org, xs->y_org);
     }
-    
+
     XFree(xineramaScreens);
   }
-  
+
   return 1;
 }
 
@@ -1288,7 +1288,7 @@ static int print_dmx_info(Display *dpy, char *extname)
                             = XGetExtensionVersion(backend, INAME);
                         if (ext
                             && ext != (XExtensionVersion *)NoSuchExtension) {
-                            
+
                             int         count, i;
                             XDeviceInfo *devInfo = XListInputDevices(backend,
                                                                      &count);
@@ -1392,7 +1392,7 @@ print_known_extensions(FILE *f)
     for (i = 0, col = 6; i < num_known_extensions; i++)
     {
 	int extlen = strlen(known_extensions[i].extname) + 1;
-	
+
 	if ((col + extlen) > 79)
 	{
 		col = 6;
@@ -1446,7 +1446,7 @@ print_marked_extensions(Display *dpy)
     }
 }
 
-static void 
+static void
 usage(void)
 {
     fprintf (stderr, "usage:  %s [options]\n", ProgramName);
@@ -1459,7 +1459,7 @@ usage(void)
     exit (1);
 }
 
-int 
+int
 main(int argc, char *argv[])
 {
     Display *dpy;			/* X connection */
@@ -1471,7 +1471,7 @@ main(int argc, char *argv[])
     for (i = 1; i < argc; i++) {
 	char *arg = argv[i];
 	int len = strlen(arg);
-	
+
 	if (!strncmp("-display", arg, len)) {
 	    if (++i >= argc) usage ();
 	    displayname = argv[i];
