@@ -619,8 +619,7 @@ print_multibuf_info(Display *dpy, const char *extname)
     int i, j;			/* temp variable: iterator */
     int nmono, nstereo;		/* count */
     XmbufBufferInfo *mono_info = NULL, *stereo_info = NULL; /* arrays */
-    static const char *fmt =
-	"    visual id, max buffers, depth:    0x%lx, %d, %d\n";
+#define MULTIBUF_FMT "    visual id, max buffers, depth:    0x%lx, %d, %d\n"
     int scr = 0;
     int majorrev, minorrev;
 
@@ -639,12 +638,12 @@ print_multibuf_info(Display *dpy, const char *extname)
 	} else {
 	    printf ("  screen %d number of mono multibuffer types:    %d\n", i, nmono);
 	    for (j = 0; j < nmono; j++) {
-		printf (fmt, mono_info[j].visualid, mono_info[j].max_buffers,
-			mono_info[j].depth);
+		printf (MULTIBUF_FMT, mono_info[j].visualid,
+			mono_info[j].max_buffers, mono_info[j].depth);
 	    }
 	    printf ("  number of stereo multibuffer types:    %d\n", nstereo);
 	    for (j = 0; j < nstereo; j++) {
-		printf (fmt, stereo_info[j].visualid,
+		printf (MULTIBUF_FMT, stereo_info[j].visualid,
 			stereo_info[j].max_buffers, stereo_info[j].depth);
 	    }
 	    if (mono_info) XFree ((char *) mono_info);
