@@ -439,21 +439,6 @@ print_visual_info(XVisualInfo *vip)
 	    vip->bits_per_rgb);
 }
 
-/* xc/programs/twm/twm.c has a copy of |hasExtension()|, please
- * keep both versions in sync... */
-static
-Bool hasExtension(Display *dpy, char *extname)
-{
-  int    num_extensions,
-         i;
-  char **extensions;
-  extensions = XListExtensions(dpy, &num_extensions);
-  for (i = 0; i < num_extensions &&
-         (strcmp(extensions[i], extname) != 0); i++);
-  XFreeExtensionList(extensions);
-  return i != num_extensions;
-}
-
 static void
 print_screen_info(Display *dpy, int scr)
 {
