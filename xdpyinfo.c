@@ -224,7 +224,7 @@ static void
 print_display_info(Display *dpy)
 {
     char dummybuf[40];
-    char *cp;
+    const char *cp;
     int minkeycode, maxkeycode;
     int i, n;
     long req_size;
@@ -407,7 +407,7 @@ static void
 print_visual_info(XVisualInfo *vip)
 {
     char errorbuf[40];			/* for sprintfing into */
-    char *class = NULL;			/* for printing */
+    const char *class = NULL;		/* for printing */
 
     switch (vip->class) {
       case StaticGray:    class = "StaticGray"; break;
@@ -463,7 +463,7 @@ print_screen_info(Display *dpy, int scr)
     int nvi;				/* number of elements returned */
     int i;				/* temp variable: iterator */
     char eventbuf[80];			/* want 79 chars per line + nul */
-    static char *yes = "YES", *no = "NO", *when = "WHEN MAPPED";
+    static const char *yes = "YES", *no = "NO", *when = "WHEN MAPPED";
     double xres, yres;
     int ndepths = 0, *depths = NULL;
     unsigned int width, height;
@@ -544,7 +544,7 @@ print_screen_info(Display *dpy, int scr)
 #define MASK_NAME_WIDTH 25
 
 static struct _event_table {
-    char *name;
+    const char *name;
     long value;
 } event_table[] = {
     { "KeyPressMask             ", KeyPressMask },
@@ -611,7 +611,7 @@ print_event_mask(char *buf,     /* string to write into */
 }
 
 static void
-print_standard_extension_info(Display *dpy, char *extname,
+print_standard_extension_info(Display *dpy, const char *extname,
 			      int majorrev, int minorrev)
 {
     int opcode, event, error;
@@ -629,12 +629,12 @@ print_standard_extension_info(Display *dpy, char *extname,
 
 #ifdef MULTIBUFFER
 static int
-print_multibuf_info(Display *dpy, char *extname)
+print_multibuf_info(Display *dpy, const char *extname)
 {
     int i, j;			/* temp variable: iterator */
     int nmono, nstereo;		/* count */
     XmbufBufferInfo *mono_info = NULL, *stereo_info = NULL; /* arrays */
-    static char *fmt =
+    static const char *fmt =
 	"    visual id, max buffers, depth:    0x%lx, %d, %d\n";
     int scr = 0;
     int majorrev, minorrev;
@@ -671,7 +671,7 @@ print_multibuf_info(Display *dpy, char *extname)
 #endif
 
 static int
-print_xtest_info(Display *dpy, char *extname)
+print_xtest_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev, foo;
 
@@ -682,7 +682,7 @@ print_xtest_info(Display *dpy, char *extname)
 }
 
 static int
-print_sync_info(Display *dpy, char *extname)
+print_sync_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
     XSyncSystemCounter *syscounters;
@@ -706,7 +706,7 @@ print_sync_info(Display *dpy, char *extname)
 }
 
 static int
-print_shape_info(Display *dpy, char *extname)
+print_shape_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
 
@@ -718,7 +718,7 @@ print_shape_info(Display *dpy, char *extname)
 
 #ifdef XFreeXDGA
 static int
-print_dga_info(Display *dpy, char *extname)
+print_dga_info(Display *dpy, const char *extname)
 {
     unsigned int offset;
     int majorrev, minorrev, width, bank, ram, flags;
@@ -789,7 +789,7 @@ print_XF86VidMode_modeline(
 }
 
 static int
-print_XF86VidMode_info(Display *dpy, char *extname)
+print_XF86VidMode_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev, modecount, dotclock, i;
     XF86VidModeMonitor monitor;
@@ -861,18 +861,20 @@ print_XF86VidMode_info(Display *dpy, char *extname)
 
 #ifdef XF86MISC
 
-static char *kbdtable[] = { "Unknown", "84-key", "101-key", "Other", "Xqueue" };
-static char *msetable[] = { "None", "Microsoft", "MouseSystems", "MMSeries",
+static const char *kbdtable[] = {
+		     "Unknown", "84-key", "101-key", "Other", "Xqueue" };
+static const char *msetable[] = {
+		     "None", "Microsoft", "MouseSystems", "MMSeries",
 		     "Logitech", "BusMouse", "Mouseman", "PS/2", "MMHitTab",
 		     "GlidePoint", "IntelliMouse", "ThinkingMouse",
 		     "IMPS/2", "ThinkingMousePS/2", "MouseManPlusPS/2",
 		     "GlidePointPS/2", "NetMousePS/2", "NetScrollPS/2",
 		     "SysMouse", "Auto" };
-static char *flgtable[] = { "None", "ClearDTR", "ClearRTS",
-		     "ClearDTR and ClearRTS" };
+static const char *flgtable[] = {
+		     "None", "ClearDTR", "ClearRTS", "ClearDTR and ClearRTS" };
 
 static int
-print_XF86Misc_info(Display *dpy, char *extname)
+print_XF86Misc_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
     XF86MiscMouseSettings mouseinfo;
@@ -923,7 +925,7 @@ print_XF86Misc_info(Display *dpy, char *extname)
 
 #ifdef MITSHM
 static int
-print_mitshm_info(Display *dpy, char *extname)
+print_mitshm_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
     Bool sharedPixmaps;
@@ -947,7 +949,7 @@ print_mitshm_info(Display *dpy, char *extname)
 
 #ifdef XKB
 static int
-print_xkb_info(Display *dpy, char *extname)
+print_xkb_info(Display *dpy, const char *extname)
 {
     int opcode, eventbase, errorbase, majorrev, minorrev;
 
@@ -969,7 +971,7 @@ print_xkb_info(Display *dpy, char *extname)
 #endif
 
 static int
-print_dbe_info(Display *dpy, char *extname)
+print_dbe_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
     XdbeScreenVisualInfo *svi;
@@ -997,7 +999,7 @@ print_dbe_info(Display *dpy, char *extname)
 }
 
 static int
-print_record_info(Display *dpy, char *extname)
+print_record_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev;
 
@@ -1009,7 +1011,7 @@ print_record_info(Display *dpy, char *extname)
 
 #ifdef XINPUT
 static int
-print_xinput_info(Display *dpy, char *extname)
+print_xinput_info(Display *dpy, const char *extname)
 {
   int           loop, num_extensions, num_devices;
   char          **extensions;
@@ -1069,7 +1071,7 @@ print_xinput_info(Display *dpy, char *extname)
 
 #ifdef XRENDER
 static int
-print_xrender_info(Display *dpy, char *extname)
+print_xrender_info(Display *dpy, const char *extname)
 {
   int		    loop, num_extensions;
   char		    **extensions;
@@ -1179,7 +1181,7 @@ print_xrender_info(Display *dpy, char *extname)
 
 #ifdef COMPOSITE
 static int
-print_composite_info(Display *dpy, char *extname)
+print_composite_info(Display *dpy, const char *extname)
 {
     int majorrev, minorrev, foo;
 
@@ -1195,7 +1197,7 @@ print_composite_info(Display *dpy, char *extname)
 #ifdef PANORAMIX
 
 static int
-print_xinerama_info(Display *dpy, char *extname)
+print_xinerama_info(Display *dpy, const char *extname)
 {
   int              majorrev, minorrev;
 
@@ -1232,7 +1234,7 @@ static const char *core(DMXInputAttributes *iinfo)
     else                       return "extension";
 }
 
-static int print_dmx_info(Display *dpy, char *extname)
+static int print_dmx_info(Display *dpy, const char *extname)
 {
     int                  event_base, error_base;
     int                  major_version, minor_version, patch_version;
@@ -1331,11 +1333,11 @@ static int print_dmx_info(Display *dpy, char *extname)
 
 
 typedef int (*ExtensionPrintFunc)(
-    Display *, char *
+    Display *, const char *
 );
 
 typedef struct {
-    char *extname;
+    const char *extname;
     ExtensionPrintFunc printfunc;
     Bool printit;
 } ExtensionPrintInfo;
@@ -1404,7 +1406,7 @@ print_known_extensions(FILE *f)
 }
 
 static void
-mark_extension_for_printing(char *extname)
+mark_extension_for_printing(const char *extname)
 {
     int i;
 
