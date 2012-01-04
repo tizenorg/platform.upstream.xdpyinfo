@@ -78,6 +78,10 @@ in this Software without prior written authorization from The Open Group.
 
 #endif
 
+#ifdef WIN32
+#include <X11/Xwindows.h>
+#endif
+
 #include <X11/Xlib-xcb.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
