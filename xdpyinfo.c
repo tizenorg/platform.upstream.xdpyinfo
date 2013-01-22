@@ -1439,11 +1439,11 @@ print_marked_extensions(Display *dpy)
 static void _X_NORETURN
 usage(void)
 {
-    fprintf (stderr, "usage:  %s [options]\n", ProgramName);
-    fprintf (stderr, "-display displayname\tserver to query\n");
-    fprintf (stderr, "-queryExtensions\tprint info returned by XQueryExtension\n");
-    fprintf (stderr, "-ext all\t\tprint detailed info for all supported extensions\n");
-    fprintf (stderr, "-ext extension-name\tprint detailed info for extension-name if one of:\n     ");
+    fprintf (stderr, "usage:  %s [options]\n%s", ProgramName,
+             "-display displayname\tserver to query\n"
+             "-queryExtensions\tprint info returned by XQueryExtension\n"
+             "-ext all\t\tprint detailed info for all supported extensions\n"
+             "-ext extension-name\tprint detailed info for extension-name if one of:\n     ");
     print_known_extensions(stderr);
     fprintf (stderr, "\n");
     exit (1);
