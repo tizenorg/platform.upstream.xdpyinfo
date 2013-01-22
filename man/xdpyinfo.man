@@ -63,6 +63,7 @@ To get the default host, display number, and screen.
 .IR xprop (__appmansuffix__),
 .IR xrdb (__appmansuffix__),
 .IR xwininfo (__appmansuffix__),
+.IR xrandr (__appmansuffix__),
 .IR xdriinfo (__appmansuffix__),
 .IR xvinfo (__appmansuffix__),
 .IR glxinfo (__appmansuffix__)
