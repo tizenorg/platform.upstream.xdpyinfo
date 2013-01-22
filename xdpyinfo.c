@@ -1436,7 +1436,7 @@ print_marked_extensions(Display *dpy)
     }
 }
 
-static void
+static void _X_NORETURN
 usage(void)
 {
     fprintf (stderr, "usage:  %s [options]\n", ProgramName);
