@@ -1460,7 +1460,7 @@ main(int argc, char *argv[])
 
     for (i = 1; i < argc; i++) {
 	char *arg = argv[i];
-	int len = strlen(arg);
+	size_t len = strlen(arg);
 
 	if (!strncmp("-display", arg, len)) {
 	    if (++i >= argc) usage ();
