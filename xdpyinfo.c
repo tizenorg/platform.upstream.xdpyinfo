@@ -1441,6 +1441,7 @@ usage(void)
 {
     fprintf (stderr, "usage:  %s [options]\n%s", ProgramName,
              "-display displayname\tserver to query\n"
+             "-version\t\tprint program version and exit\n"
              "-queryExtensions\tprint info returned by XQueryExtension\n"
              "-ext all\t\tprint detailed info for all supported extensions\n"
              "-ext extension-name\tprint detailed info for extension-name if one of:\n     ");
@@ -1470,6 +1471,9 @@ main(int argc, char *argv[])
 	} else if (!strncmp("-ext", arg, len)) {
 	    if (++i >= argc) usage ();
 	    mark_extension_for_printing(argv[i]);
+        } else if (!strncmp("-version", arg, len)) {
+            printf("%s\n", PACKAGE_STRING);
+            exit (0);
 	} else
 	    usage ();
     }

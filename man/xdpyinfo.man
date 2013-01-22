@@ -30,6 +30,7 @@ xdpyinfo \- display information utility for X
 [\-display \fIdisplayname\fP]
 [\-queryExtensions]
 [\-ext \fIextension-name\fP]
+[-version]
 .SH DESCRIPTION
 .PP
 .I Xdpyinfo
@@ -49,6 +50,9 @@ Detailed information about a particular extension is displayed with the
 \fB\-ext\fP \fIextensionName\fP option.  If \fIextensionName\fP is
 \fBall\fP, information about all extensions supported by both \fIxdpyinfo\fP
 and the server is displayed.
+.PP
+If \fB-version\fP is specified, xdpyinfo prints its version and exits, without
+contacting the X server.
 .SH ENVIRONMENT
 .PP
 .TP 8
