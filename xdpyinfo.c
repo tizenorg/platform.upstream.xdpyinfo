@@ -336,7 +336,8 @@ print_display_info(Display *dpy)
       case LSBFirst:    cp = "LSBFirst"; break;
       case MSBFirst:    cp = "MSBFirst"; break;
       default:
-	sprintf (dummybuf, "unknown order %d", BitmapBitOrder (dpy));
+	snprintf (dummybuf, sizeof(dummybuf),
+                  "unknown order %d", BitmapBitOrder (dpy));
 	cp = dummybuf;
 	break;
     }
@@ -347,7 +348,8 @@ print_display_info(Display *dpy)
       case LSBFirst:    cp = "LSBFirst"; break;
       case MSBFirst:    cp = "MSBFirst"; break;
       default:
-	sprintf (dummybuf, "unknown order %d", ImageByteOrder (dpy));
+	snprintf (dummybuf, sizeof(dummybuf),
+                  "unknown order %d", ImageByteOrder (dpy));
 	cp = dummybuf;
 	break;
     }
@@ -421,7 +423,7 @@ print_visual_info(XVisualInfo *vip)
       case TrueColor:    class = "TrueColor"; break;
       case DirectColor:    class = "DirectColor"; break;
       default:
-	sprintf (errorbuf, "unknown class %d", vip->class);
+	snprintf (errorbuf, sizeof(errorbuf), "unknown class %d", vip->class);
 	class = errorbuf;
 	break;
     }
