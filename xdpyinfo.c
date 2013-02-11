@@ -1375,7 +1375,7 @@ static ExtensionPrintInfo known_extensions[] =
     /* add new extensions here */
 };
 
-static int num_known_extensions = sizeof known_extensions / sizeof known_extensions[0];
+static const int num_known_extensions = sizeof known_extensions / sizeof known_extensions[0];
 
 static void
 print_known_extensions(FILE *f)
