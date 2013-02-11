@@ -1279,15 +1279,15 @@ static int print_dmx_info(Display *dpy, const char *extname)
                         if (ext
                             && ext != (XExtensionVersion *)NoSuchExtension) {
 
-                            int         count, i;
+                            int         dcount, d;
                             XDeviceInfo *devInfo = XListInputDevices(backend,
-                                                                     &count);
+                                                                     &dcount);
                             if (devInfo) {
-                                for (i = 0; i < count; i++) {
+                                for (d = 0; d < dcount; d++) {
                                     if ((unsigned)iinfo.physicalId
-                                        == devInfo[i].id
-                                        && devInfo[i].name) {
-                                        backendname = strdup(devInfo[i].name);
+                                        == devInfo[d].id
+                                        && devInfo[d].name) {
+                                        backendname = strdup(devInfo[d].name);
                                         break;
                                     }
                                 }
