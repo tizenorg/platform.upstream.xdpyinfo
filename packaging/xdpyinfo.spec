@@ -6,6 +6,7 @@ Summary:        Utility to display information about an X server
 Url:            http://xorg.freedesktop.org/
 Group:          Graphics/Utilities
 Source0:        http://xorg.freedesktop.org/releases/individual/app/%{name}-%{version}.tar.bz2
+Source1001: 	xdpyinfo.manifest
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(dmx)
 BuildRequires:  pkgconfig(x11)
@@ -32,6 +33,7 @@ protocol extensions that are available.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 %reconfigure
@@ -41,6 +43,7 @@ make %{?_smp_mflags}
 %make_install
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %license COPYING
 %{_bindir}/xdpyinfo
