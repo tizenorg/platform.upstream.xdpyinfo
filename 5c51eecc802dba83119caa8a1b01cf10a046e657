@@ -1,0 +1,8 @@
+Change-Id: I5c51eecc802dba83119caa8a1b01cf10a046e657
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 10:07:55 -0700
+Reviewed-on: https://review.tizen.org/gerrit/5009
+Project: platform/upstream/xdpyinfo
+Branch: refs/heads/tizen
