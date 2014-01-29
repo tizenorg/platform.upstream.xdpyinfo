@@ -1,3 +1,5 @@
+%bcond_with x
+
 Name:           xdpyinfo
 Version:        1.3.1
 Release:        1
@@ -22,6 +24,10 @@ BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(xxf86dga)
 BuildRequires:  pkgconfig(xxf86misc)
 BuildRequires:  pkgconfig(xxf86vm)
+
+%if !%{with x}
+ExclusiveArch:
+%endif
 
 %description
 xdpyinfo is a utility for displaying information about an X server.
